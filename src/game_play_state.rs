@@ -1,10 +1,10 @@
 use amethyst::{
     assets::ProgressCounter,
     core::transform::Transform,
-    ecs::{Component, DenseVecStorage, Join, World},
+    ecs::{Component, DenseVecStorage, World},
     input::{is_close_requested, is_key_down, VirtualKeyCode},
     prelude::*,
-    renderer::Camera,
+    renderer::{Camera, SpriteRender},
 };
 use serde::{Deserialize, Serialize};
 
@@ -20,18 +20,11 @@ impl SimpleState for GamePlayState {
         let world = _data.world;
         self.progress_counter = Some(Default::default());
 
-        let pikachu_sheet = spritesheet::load_sprite_sheet(world, "texture/pikachu_idle.ron");
         init_camera(world);
         init_pikachu(world);
     }
 
     fn update(&mut self, _data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
-        if let Some(ref progress_counter) = self.progress_counter {
-            if progress_counter.is_complete() {
-                let entites = _data.world.entities_mut();
-                for entity in entites.join() {}
-            }
-        }
         Trans::None
     }
 
@@ -71,6 +64,7 @@ pub enum Side {
 
 pub const PIKACHU_WIDTH: f32 = 8.0;
 pub const PIKACHU_HEIGHT: f32 = 16.0;
+pub const PIKACHU_ANIMATION_SPEED: f32 = 20.0;
 
 #[derive(Eq, PartialOrd, PartialEq, Hash, Debug, Copy, Clone, Deserialize, Serialize)]
 enum PikachuAnimations {
@@ -79,14 +73,20 @@ enum PikachuAnimations {
 
 pub struct Pikachu {
     pub side: Side,
+    pub current_frame: f32,
+    pub animation_speed: f32,
+    pub frame_size: usize,
     pub width: f32,
     pub height: f32,
 }
 
 impl Pikachu {
-    fn new(side: Side) -> Pikachu {
+    fn new(side: Side, frame_size: usize) -> Pikachu {
         Pikachu {
             side,
+            animation_speed: PIKACHU_ANIMATION_SPEED,
+            current_frame: 0.0,
+            frame_size: frame_size,
             width: PIKACHU_WIDTH,
             height: PIKACHU_HEIGHT,
         }
@@ -106,15 +106,19 @@ fn init_pikachu(world: &mut World) {
     right_transform.set_translation_xyz(812.0, 384.0, 0.0);
     right_transform.set_rotation_y_axis(PI);
 
+    let pikachu_sheet = spritesheet::load_sprite_sheet(world, "texture/pikachu_idle.ron");
+    let sprite_render = SpriteRender::new(pikachu_sheet, 0);
     world
         .create_entity()
-        .with(Pikachu::new(Side::Left))
+        .with(sprite_render.clone())
+        .with(Pikachu::new(Side::Left, 8))
         .with(left_transform)
         .build();
 
     world
         .create_entity()
-        .with(Pikachu::new(Side::Right))
+        .with(sprite_render)
+        .with(Pikachu::new(Side::Right, 8))
         .with(right_transform)
         .build();
 }
