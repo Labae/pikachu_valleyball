@@ -106,6 +106,7 @@ fn init_pikachu(world: &mut World) {
     right_transform.set_translation_xyz(812.0, 384.0, 0.0);
     right_transform.set_rotation_y_axis(PI);
 
+    // https://mtigley.dev/posts/sprite-animations-with-amethyst/
     let pikachu_sheet = spritesheet::load_sprite_sheet(world, "texture/pikachu_idle.ron");
     let sprite_render = SpriteRender::new(pikachu_sheet, 0);
     world
