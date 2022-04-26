@@ -39,7 +39,8 @@ fn main() -> amethyst::Result<()> {
                         .with_clear([0.0, 0.0, 0.0, 1.0]),
                 )
                 .with_plugin(RenderFlat2D::default()),
-        )?;
+        )
+        .unwrap();
 
     let assets_dir = app_root.join("assets");
     let mut game = Application::new(assets_dir, GamePlayState::default(), game_data).unwrap();
