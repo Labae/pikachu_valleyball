@@ -1,5 +1,6 @@
 use amethyst::{
     assets::ProgressCounter,
+    core::math::Vector3,
     core::transform::Transform,
     ecs::{Component, DenseVecStorage, World},
     input::{is_close_requested, is_key_down, VirtualKeyCode},
@@ -10,8 +11,8 @@ use amethyst::{
 use crate::animation::{self, Animation};
 use crate::spritesheet;
 
-pub const GROUND_Y: f32 = 200.0;
-pub const GRAVITY: f32 = -98.0;
+pub const GROUND_Y: f32 = 100.0;
+pub const GRAVITY: f32 = -35.0;
 
 #[derive(Default)]
 pub struct GamePlayState {
@@ -78,7 +79,7 @@ pub enum Side {
 pub const PIKACHU_WIDTH: f32 = 8.0;
 pub const PIKACHU_HEIGHT: f32 = 16.0;
 pub const PIKACHU_MOVE_SPEED: f32 = 300.0;
-pub const PIKACHU_JUMP_FORCE: f32 = 25.0;
+pub const PIKACHU_JUMP_FORCE: f32 = 20.0;
 
 #[derive(Copy, Clone)]
 pub enum PikachuAction {
@@ -105,6 +106,7 @@ pub struct Pikachu {
     pub side: Side,
     pub move_speed: f32,
     pub is_grounded: bool,
+    pub jump_buffer: f32,
     idle_anim: Animation,
     jump_anim: Animation,
 }
@@ -115,6 +117,7 @@ impl Pikachu {
             side,
             move_speed: PIKACHU_MOVE_SPEED,
             is_grounded: false,
+            jump_buffer: 0.0,
             idle_anim: idle_anim,
             jump_anim: jump_anim,
         }
@@ -138,8 +141,11 @@ fn init_pikachu(world: &mut World) {
     let mut left_transform = Transform::default();
     let mut right_transform = Transform::default();
     left_transform.set_translation_xyz(212.0, GROUND_Y, 0.0);
+    left_transform.set_scale(Vector3::new(2.0, 2.0, 1.0));
+
     right_transform.set_translation_xyz(812.0, GROUND_Y, 0.0);
     right_transform.set_rotation_y_axis(std::f32::consts::PI);
+    right_transform.set_scale(Vector3::new(2.0, 2.0, 1.0));
 
     let pikachu_sheet = spritesheet::load_sprite_sheet(
         world,
