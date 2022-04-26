@@ -135,13 +135,11 @@ impl Component for Pikachu {
 }
 
 fn init_pikachu(world: &mut World) {
-    use std::f32::consts::PI;
-
     let mut left_transform = Transform::default();
     let mut right_transform = Transform::default();
     left_transform.set_translation_xyz(212.0, 200.0, 0.0);
     right_transform.set_translation_xyz(812.0, 200.0, 0.0);
-    right_transform.set_rotation_y_axis(PI);
+    right_transform.set_rotation_y_axis(std::f32::consts::PI);
 
     let pikachu_sheet = spritesheet::load_sprite_sheet(
         world,
