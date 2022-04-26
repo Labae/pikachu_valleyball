@@ -104,11 +104,9 @@ impl Component for PikachuStatus {
 pub struct Pikachu {
     pub side: Side,
     pub move_speed: f32,
-    pub width: f32,
-    pub height: f32,
     pub is_grounded: bool,
-    pub idle_anim: Animation,
-    pub jump_anim: Animation,
+    idle_anim: Animation,
+    jump_anim: Animation,
 }
 
 impl Pikachu {
@@ -116,21 +114,19 @@ impl Pikachu {
         Pikachu {
             side,
             move_speed: PIKACHU_MOVE_SPEED,
-            width: PIKACHU_WIDTH,
-            height: PIKACHU_HEIGHT,
             is_grounded: false,
             idle_anim: idle_anim,
             jump_anim: jump_anim,
         }
     }
 
-    pub fn get_animation(&self, status: &PikachuStatus) -> Animation {
+    pub fn get_animation(&self, status: &PikachuStatus) -> Result<Animation, amethyst::Error> {
         let anim = match status.action {
             PikachuAction::Idle => self.idle_anim,
             PikachuAction::Jump => self.jump_anim,
         };
 
-        anim
+        Ok(anim)
     }
 }
 

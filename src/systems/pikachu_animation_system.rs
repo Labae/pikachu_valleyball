@@ -22,7 +22,7 @@ impl<'s> System<'s> for PikachuAnimationSystem {
         for (pikachu_status, pikachu, sprite) in
             (&pikachu_statuses, &mut pikachus, &mut sprite_renders).join()
         {
-            let animation = pikachu.get_animation(pikachu_status);
+            let animation = pikachu.get_animation(pikachu_status).unwrap();
             let elapsed_time = time.frame_number();
             let frame = (elapsed_time / animation.frame_duration) as i32 % animation.frames;
             sprite.sprite_number = animation.first_sprite_index + frame as usize;
