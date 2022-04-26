@@ -1,3 +1,5 @@
-pub use self::pikachu::PikachuSystem;
+pub use self::pikachu_animation_system::PikachuAnimationSystem;
+pub use self::pikachu_system::PikachuSystem;
 
-mod pikachu;
+mod pikachu_animation_system;
+mod pikachu_system;

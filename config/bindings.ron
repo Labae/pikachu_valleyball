@@ -1,0 +1,10 @@
+(
+  axes: {
+    "left_pikachu_horizontal": Emulated(pos: Key(D), neg: Key(A)),
+    "right_pikachu_horizontal": Emulated(pos: Key(Right), neg: Key(Left)),
+  },
+  actions: {
+    "left_pikachu_jump": [[Key(W)]],
+    "right_pikachu_jump": [[Key(Up)]],
+  },
+)

@@ -5,6 +5,7 @@ List((
     texture_height: 885,
     // List of sprites the sheet holds
     sprites: [
+        // Idle: 8
         (
             // Horizontal position of the sprite in the sprite sheet
             x: 2,
@@ -92,6 +93,103 @@ List((
         (
             // Horizontal position of the sprite in the sprite sheet
             x: 68,
+            // Vertical position of the sprite in the sprite sheet
+            y: 266,
+            // Width of the sprite
+            width: 64,
+            // Height of the sprite
+            height: 64,
+            // Number of pixels to shift the sprite to the left and down relative to the entity holding it when rendering
+            offsets: Some((0.0, 0.0)), // This is optional and defaults to (0.0, 0.0)
+        ),
+        // Jump: 8
+        (
+            // Horizontal position of the sprite in the sprite sheet
+            x: 332,
+            // Vertical position of the sprite in the sprite sheet
+            y: 266,
+            // Width of the sprite
+            width: 64,
+            // Height of the sprite
+            height: 64,
+            // Number of pixels to shift the sprite to the left and down relative to the entity holding it when rendering
+            offsets: Some((0.0, 0.0)), // This is optional and defaults to (0.0, 0.0)
+        ),
+        (
+            // Horizontal position of the sprite in the sprite sheet
+            x: 398,
+            // Vertical position of the sprite in the sprite sheet
+            y: 266,
+            // Width of the sprite
+            width: 64,
+            // Height of the sprite
+            height: 64,
+            // Number of pixels to shift the sprite to the left and down relative to the entity holding it when rendering
+            offsets: Some((0.0, 0.0)), // This is optional and defaults to (0.0, 0.0)
+        ),
+        (
+            // Horizontal position of the sprite in the sprite sheet
+            x: 2,
+            // Vertical position of the sprite in the sprite sheet
+            y: 332,
+            // Width of the sprite
+            width: 64,
+            // Height of the sprite
+            height: 64,
+            // Number of pixels to shift the sprite to the left and down relative to the entity holding it when rendering
+            offsets: Some((0.0, 0.0)), // This is optional and defaults to (0.0, 0.0)
+        ),
+        (
+            // Horizontal position of the sprite in the sprite sheet
+            x: 68,
+            // Vertical position of the sprite in the sprite sheet
+            y: 332,
+            // Width of the sprite
+            width: 64,
+            // Height of the sprite
+            height: 64,
+            // Number of pixels to shift the sprite to the left and down relative to the entity holding it when rendering
+            offsets: Some((0.0, 0.0)), // This is optional and defaults to (0.0, 0.0)
+        ),
+        (
+            // Horizontal position of the sprite in the sprite sheet
+            x: 134,
+            // Vertical position of the sprite in the sprite sheet
+            y: 332,
+            // Width of the sprite
+            width: 64,
+            // Height of the sprite
+            height: 64,
+            // Number of pixels to shift the sprite to the left and down relative to the entity holding it when rendering
+            offsets: Some((0.0, 0.0)), // This is optional and defaults to (0.0, 0.0)
+        ),
+        (
+            // Horizontal position of the sprite in the sprite sheet
+            x: 68,
+            // Vertical position of the sprite in the sprite sheet
+            y: 332,
+            // Width of the sprite
+            width: 64,
+            // Height of the sprite
+            height: 64,
+            // Number of pixels to shift the sprite to the left and down relative to the entity holding it when rendering
+            offsets: Some((0.0, 0.0)), // This is optional and defaults to (0.0, 0.0)
+        ),
+        (
+            // Horizontal position of the sprite in the sprite sheet
+            x: 2,
+            // Vertical position of the sprite in the sprite sheet
+            y: 332,
+            // Width of the sprite
+            width: 64,
+            // Height of the sprite
+            height: 64,
+            // Number of pixels to shift the sprite to the left and down relative to the entity holding it when rendering
+            offsets: Some((0.0, 0.0)), // This is optional and defaults to (0.0, 0.0)
+        ),
+        (
+            // Horizontal position of the sprite in the sprite sheet
+            x: 398,
             // Vertical position of the sprite in the sprite sheet
             y: 266,
             // Width of the sprite

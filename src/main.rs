@@ -1,5 +1,6 @@
 use amethyst::{
     core::transform::TransformBundle,
+    input::{InputBundle, StringBindings},
     prelude::*,
     renderer::{
         plugins::{RenderFlat2D, RenderToWindow},
@@ -9,6 +10,7 @@ use amethyst::{
     utils::application_root_dir,
 };
 
+pub mod animation;
 pub mod game_play_state;
 pub mod spritesheet;
 pub mod systems;
@@ -21,9 +23,15 @@ fn main() -> amethyst::Result<()> {
     let app_root = application_root_dir()?;
     let display_config_path = app_root.join("config").join("display.ron");
 
+    let bindings_path = app_root.join("config").join("bindings.ron");
+    let input_bundle =
+        InputBundle::<StringBindings>::new().with_bindings_from_file(bindings_path)?;
+
     let game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
-        .with(systems::PikachuSystem, "pikachu_system", &[])
+        .with_bundle(input_bundle)?
+        .with(systems::PikachuAnimationSystem, "animation_system", &[])
+        .with(systems::PikachuSystem, "pikachu_system", &["input_system"])
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
                 .with_plugin(
