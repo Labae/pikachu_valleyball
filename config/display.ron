@@ -1,4 +1,6 @@
 (
     title: "Window",
     dimensions: Some((800, 600)),
+    always_on_top: true,
+    resizable: false,
 )

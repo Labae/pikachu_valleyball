@@ -26,6 +26,7 @@ impl SimpleState for GamePlayState {
 
         init_camera(world);
         init_pikachu(world);
+        init_ball(world);
     }
 
     fn update(&mut self, _data: &mut StateData<'_, GameData<'_, '_>>) -> SimpleTrans {
@@ -188,5 +189,45 @@ fn init_pikachu(world: &mut World) {
         .with(velocity)
         .with(right_pikachu)
         .with(right_transform)
+        .build();
+}
+
+pub struct Ball {
+    pub idle_anim: Animation,
+    pub is_hyper: bool,
+}
+
+impl Ball {
+    fn new(idle_anim: Animation) -> Ball {
+        Ball {
+            idle_anim: idle_anim,
+            is_hyper: false,
+        }
+    }
+}
+
+impl Component for Ball {
+    type Storage = DenseVecStorage<Self>;
+}
+
+pub fn init_ball(world: &mut World) {
+    let mut local_transform = Transform::default();
+    local_transform.set_translation_xyz(212.0, 600.0, 0.0);
+    local_transform.set_scale(Vector3::new(1.5, 1.5, 1.0));
+
+    let sprite_sheet =
+        spritesheet::load_sprite_sheet(world, "texture/sprite_sheet.png", "texture/ball_anim.ron");
+    let sprite_render = SpriteRender::new(sprite_sheet, 0);
+    let idle_anim = Animation {
+        frames: 5,
+        frame_duration: 10,
+        first_sprite_index: 0,
+    };
+
+    world
+        .create_entity()
+        .with(local_transform)
+        .with(sprite_render)
+        .with(Ball::new(idle_anim))
         .build();
 }

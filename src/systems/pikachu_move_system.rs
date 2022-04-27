@@ -13,9 +13,9 @@ use crate::game_play_state::{
 const JUMP_BUFFER_TIME: f32 = 0.15;
 
 #[derive(SystemDesc)]
-pub struct PikachuSystem;
+pub struct PikachuMoveSystem;
 
-impl<'s> System<'s> for PikachuSystem {
+impl<'s> System<'s> for PikachuMoveSystem {
     type SystemData = (
         WriteStorage<'s, Pikachu>,
         WriteStorage<'s, PikachuStatus>,
