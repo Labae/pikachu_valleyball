@@ -1,6 +1,6 @@
 use amethyst::{
     assets::ProgressCounter,
-    core::math::Vector3,
+    core::math::{Vector2, Vector3},
     core::transform::Transform,
     ecs::{Component, DenseVecStorage, World},
     input::{is_close_requested, is_key_down, VirtualKeyCode},
@@ -12,7 +12,7 @@ use crate::animation::{self, Animation};
 use crate::spritesheet;
 
 pub const GROUND_Y: f32 = 100.0;
-pub const GRAVITY: f32 = -35.0;
+pub const GRAVITY: f32 = -10.0;
 
 #[derive(Default)]
 pub struct GamePlayState {
@@ -192,9 +192,17 @@ fn init_pikachu(world: &mut World) {
         .build();
 }
 
+const BALL_MOVE_SPEED: f32 = 15.0;
+const BALL_HYPER_MOVE_SPEED: f32 = 30.0;
 pub struct Ball {
     pub idle_anim: Animation,
     pub is_hyper: bool,
+    pub move_speed: f32,
+    pub hyper_move_speed: f32,
+
+    pub position: Vector2<f32>,
+    pub prev1_position: Vector2<f32>,
+    pub prev2_position: Vector2<f32>,
 }
 
 impl Ball {
@@ -202,6 +210,11 @@ impl Ball {
         Ball {
             idle_anim: idle_anim,
             is_hyper: false,
+            move_speed: BALL_MOVE_SPEED,
+            hyper_move_speed: BALL_HYPER_MOVE_SPEED,
+            position: Vector2::new(0.0, 0.0),
+            prev1_position: Vector2::new(0.0, 0.0),
+            prev2_position: Vector2::new(0.0, 0.0),
         }
     }
 }
@@ -210,24 +223,64 @@ impl Component for Ball {
     type Storage = DenseVecStorage<Self>;
 }
 
+pub struct BallGhost {
+    pub is_trail: bool,
+}
+
+impl BallGhost {
+    fn new(is_trail: bool) -> BallGhost {
+        BallGhost { is_trail: is_trail }
+    }
+}
+
+impl Component for BallGhost {
+    type Storage = DenseVecStorage<Self>;
+}
+
 pub fn init_ball(world: &mut World) {
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(212.0, 600.0, 0.0);
-    local_transform.set_scale(Vector3::new(1.5, 1.5, 1.0));
+    local_transform.set_scale(Vector3::new(2.0, 2.0, 1.0));
 
     let sprite_sheet =
         spritesheet::load_sprite_sheet(world, "texture/sprite_sheet.png", "texture/ball_anim.ron");
-    let sprite_render = SpriteRender::new(sprite_sheet, 0);
+    let sprite_render = SpriteRender::new(sprite_sheet.clone(), 0);
     let idle_anim = Animation {
         frames: 5,
         frame_duration: 10,
         first_sprite_index: 0,
     };
 
+    let velocity = Velocity { x: 0.0, y: 0.0 };
+
     world
         .create_entity()
         .with(local_transform)
         .with(sprite_render)
+        .with(velocity)
         .with(Ball::new(idle_anim))
+        .build();
+
+    let mut local_transform = Transform::default();
+    local_transform.set_translation_xyz(212.0, 600.0, -1.0);
+    local_transform.set_scale(Vector3::new(2.0, 2.0, 1.0));
+    let sprite_render = SpriteRender::new(sprite_sheet.clone(), 5);
+
+    world
+        .create_entity()
+        .with(sprite_render)
+        .with(local_transform)
+        .with(BallGhost::new(false))
+        .build();
+
+    let mut local_transform = Transform::default();
+    local_transform.set_translation_xyz(212.0, 610.0, -2.0);
+    local_transform.set_scale(Vector3::new(2.0, 2.0, 1.0));
+    let sprite_render = SpriteRender::new(sprite_sheet, 6);
+    world
+        .create_entity()
+        .with(sprite_render)
+        .with(local_transform)
+        .with(BallGhost::new(true))
         .build();
 }

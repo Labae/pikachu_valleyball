@@ -29,6 +29,11 @@ fn main() -> amethyst::Result<()> {
 
     let game_data = GameDataBuilder::default()
         .with_bundle(TransformBundle::new())?
+        // .with(
+        //     SpriteVisibilitySortingSystem::new(),
+        //     "sprite_visibility_system",
+        //     &["transform_system"],
+        // )
         .with_bundle(input_bundle)?
         .with(systems::PikachuAnimationSystem, "pikachu_anim_system", &[])
         .with(
@@ -36,7 +41,13 @@ fn main() -> amethyst::Result<()> {
             "pikachu_system",
             &["input_system"],
         )
+        .with(systems::BallSystem, "ball_system", &[])
         .with(systems::BallAnimationSystem, "ball_anim_system", &[])
+        .with(
+            systems::BallGhostSystem,
+            "ball_ghost_system",
+            &["ball_system"],
+        )
         .with_bundle(
             RenderingBundle::<DefaultBackend>::new()
                 .with_plugin(

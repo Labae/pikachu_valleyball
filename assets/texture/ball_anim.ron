@@ -65,5 +65,31 @@ List((
             // Number of pixels to shift the sprite to the left and down relative to the entity holding it when rendering
             offsets: Some((0.0, 0.0)), // This is optional and defaults to (0.0, 0.0)
         ),
+        // hyper: 5
+        (
+            // Horizontal position of the sprite in the sprite sheet
+            x: 298,
+            // Vertical position of the sprite in the sprite sheet
+            y: 158,
+            // Width of the sprite
+            width: 40,
+            // Height of the sprite
+            height: 40,
+            // Number of pixels to shift the sprite to the left and down relative to the entity holding it when rendering
+            offsets: Some((0.0, 0.0)), // This is optional and defaults to (0.0, 0.0)
+        ),
+        // trail: 6
+        (
+            // Horizontal position of the sprite in the sprite sheet
+            x: 382,
+            // Vertical position of the sprite in the sprite sheet
+            y: 158,
+            // Width of the sprite
+            width: 40,
+            // Height of the sprite
+            height: 40,
+            // Number of pixels to shift the sprite to the left and down relative to the entity holding it when rendering
+            offsets: Some((0.0, 0.0)), // This is optional and defaults to (0.0, 0.0)
+        ),
     ],
 ))
