@@ -41,7 +41,7 @@ fn main() -> amethyst::Result<()> {
             "pikachu_system",
             &["input_system"],
         )
-        .with(systems::BallSystem, "ball_system", &[])
+        .with(systems::BallSystem::default(), "ball_system", &[])
         .with(systems::BallAnimationSystem, "ball_anim_system", &[])
         .with(
             systems::BallGhostSystem,

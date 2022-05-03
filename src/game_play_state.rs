@@ -12,7 +12,7 @@ use crate::animation::{self, Animation};
 use crate::spritesheet;
 
 pub const GROUND_Y: f32 = 100.0;
-pub const GRAVITY: f32 = -10.0;
+pub const GRAVITY: f32 = -198.0;
 
 #[derive(Default)]
 pub struct GamePlayState {
@@ -52,11 +52,11 @@ impl SimpleState for GamePlayState {
 
 fn init_camera(world: &mut World) {
     let mut transform = Transform::default();
-    transform.set_translation_xyz(512.0, 384.0, 1.0);
+    transform.set_translation_xyz(400.0, 300.0, 1.0);
 
     world
         .create_entity()
-        .with(Camera::standard_2d(1024.0, 768.0))
+        .with(Camera::standard_2d(800.0, 600.0))
         .with(transform)
         .build();
 }
@@ -141,12 +141,12 @@ impl Component for Pikachu {
 fn init_pikachu(world: &mut World) {
     let mut left_transform = Transform::default();
     let mut right_transform = Transform::default();
-    left_transform.set_translation_xyz(212.0, GROUND_Y, 0.0);
-    left_transform.set_scale(Vector3::new(2.0, 2.0, 1.0));
+    left_transform.set_translation_xyz(200.0, GROUND_Y, 0.0);
+    left_transform.set_scale(Vector3::new(1.5, 1.5, 1.0));
 
-    right_transform.set_translation_xyz(812.0, GROUND_Y, 0.0);
+    right_transform.set_translation_xyz(600.0, GROUND_Y, 0.0);
     right_transform.set_rotation_y_axis(std::f32::consts::PI);
-    right_transform.set_scale(Vector3::new(2.0, 2.0, 1.0));
+    right_transform.set_scale(Vector3::new(1.5, 1.5, 1.0));
 
     let pikachu_sheet = spritesheet::load_sprite_sheet(
         world,
@@ -239,8 +239,9 @@ impl Component for BallGhost {
 
 pub fn init_ball(world: &mut World) {
     let mut local_transform = Transform::default();
-    local_transform.set_translation_xyz(212.0, 600.0, 0.0);
-    local_transform.set_scale(Vector3::new(2.0, 2.0, 1.0));
+    local_transform.set_translation_xyz(200.0, 500.0, 0.0);
+    let scale = Vector3::new(1.5, 1.5, 1.0);
+    local_transform.set_scale(scale.clone());
 
     let sprite_sheet =
         spritesheet::load_sprite_sheet(world, "texture/sprite_sheet.png", "texture/ball_anim.ron");
@@ -263,7 +264,7 @@ pub fn init_ball(world: &mut World) {
 
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(212.0, 600.0, -1.0);
-    local_transform.set_scale(Vector3::new(2.0, 2.0, 1.0));
+    local_transform.set_scale(scale.clone());
     let sprite_render = SpriteRender::new(sprite_sheet.clone(), 5);
 
     world
@@ -275,7 +276,7 @@ pub fn init_ball(world: &mut World) {
 
     let mut local_transform = Transform::default();
     local_transform.set_translation_xyz(212.0, 610.0, -2.0);
-    local_transform.set_scale(Vector3::new(2.0, 2.0, 1.0));
+    local_transform.set_scale(scale);
     let sprite_render = SpriteRender::new(sprite_sheet, 6);
     world
         .create_entity()
