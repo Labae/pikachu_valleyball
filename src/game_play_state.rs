@@ -8,8 +8,7 @@ use amethyst::{
     renderer::{Camera, SpriteRender},
 };
 
-use crate::animation::{self, Animation};
-use crate::spritesheet;
+use crate::{components::Animation, resources::load_sprite_sheet};
 
 pub const GROUND_Y: f32 = 100.0;
 pub const GRAVITY: f32 = -198.0;
@@ -148,7 +147,7 @@ fn init_pikachu(world: &mut World) {
     right_transform.set_rotation_y_axis(std::f32::consts::PI);
     right_transform.set_scale(Vector3::new(1.5, 1.5, 1.0));
 
-    let pikachu_sheet = spritesheet::load_sprite_sheet(
+    let pikachu_sheet = load_sprite_sheet(
         world,
         "texture/sprite_sheet.png",
         "texture/pikachu_anim.ron",
@@ -160,12 +159,12 @@ fn init_pikachu(world: &mut World) {
         action: PikachuAction::Idle,
     };
 
-    let idle_anim = animation::Animation {
+    let idle_anim = Animation {
         frames: 8,
         frame_duration: 10,
         first_sprite_index: 0,
     };
-    let jump_anim = animation::Animation {
+    let jump_anim = Animation {
         frames: 8,
         frame_duration: 2,
         first_sprite_index: 8,
@@ -192,8 +191,8 @@ fn init_pikachu(world: &mut World) {
         .build();
 }
 
-const BALL_MOVE_SPEED: f32 = 15.0;
-const BALL_HYPER_MOVE_SPEED: f32 = 30.0;
+const BALL_MOVE_SPEED: f32 = 1.0;
+const BALL_HYPER_MOVE_SPEED: f32 = 5.0;
 pub struct Ball {
     pub idle_anim: Animation,
     pub is_hyper: bool,
@@ -244,7 +243,7 @@ pub fn init_ball(world: &mut World) {
     local_transform.set_scale(scale.clone());
 
     let sprite_sheet =
-        spritesheet::load_sprite_sheet(world, "texture/sprite_sheet.png", "texture/ball_anim.ron");
+        load_sprite_sheet(world, "texture/sprite_sheet.png", "texture/ball_anim.ron");
     let sprite_render = SpriteRender::new(sprite_sheet.clone(), 0);
     let idle_anim = Animation {
         frames: 5,

@@ -37,6 +37,11 @@ impl<'s> System<'s> for BallSystem {
     // have to impl the rigid_body(physic).
     fn run(&mut self, (mut balls, mut velocities, mut transforms, time): Self::SystemData) {
         for (ball, velocity, transform) in (&mut balls, &mut velocities, &mut transforms).join() {
+            // gravity
+            if transform.translation().y > GROUND_Y {
+                velocity.y = GRAVITY;
+            }
+
             // clamp the wall and ground
             if transform.translation().y <= GROUND_Y && velocity.y < 0.0 {
                 velocity.y *= -1.0;
@@ -54,9 +59,14 @@ impl<'s> System<'s> for BallSystem {
                 velocity.x *= -1.0;
             }
 
+            let acc = if ball.is_hyper {
+                ball.hyper_move_speed
+            } else {
+                ball.move_speed
+            };
             transform.append_translation_xyz(
-                velocity.x * time.delta_seconds(),
-                velocity.y * time.delta_seconds(),
+                velocity.x * time.delta_seconds() * acc,
+                velocity.y * time.delta_seconds() * acc,
                 0.0,
             );
 
