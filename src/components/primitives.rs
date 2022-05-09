@@ -19,6 +19,28 @@ impl Component for Collider2D {
     type Storage = DenseVecStorage<Self>;
 }
 
+pub struct Circle {
+    radius: f32,
+    body: Rigidbody2D,
+}
+
+impl Circle {
+    pub fn new(radius: f32) -> Circle {
+        Circle {
+            radius: radius,
+            body: Rigidbody2D::new(),
+        }
+    }
+
+    pub fn get_radius(&self) -> f32 {
+        self.radius
+    }
+
+    pub fn get_center(&self) -> Vector2<f32> {
+        self.body.get_position()
+    }
+}
+
 pub struct CircleCollider2D {
     collider2d: Collider2D,
     pub radius: f32,
@@ -82,11 +104,7 @@ impl BoxCollider2D {
             Vector2::new(max.x, max.y),
         ];
 
-        if self.rigidbody2d.get_rotation() != 0.0 {
-            for vertex in vertices.iter() {
-                // rotate the vertices
-            }
-        }
+        if self.rigidbody2d.get_rotation() != 0.0 {}
 
         vertices
     }
