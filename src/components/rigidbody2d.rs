@@ -24,6 +24,8 @@ impl Rigidbody2D {
     pub fn get_rotation(&self) -> f32 {
         self.transform.rotation().angle()
     }
+
+    pub fn rotate(&self, angle: f32) {}
 }
 
 impl Component for Rigidbody2D {
