@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 amethyst = "0.15.3"
 amethyst_window = "0.15.3"
+rapier2d = "0.12.0"
 
 [features]
 default = ["vulkan"]
